@@ -22,9 +22,9 @@ public class RegisterServlet extends HttpServlet {
 
         boolean flag = service.register(userName, password, phone);
         if (flag == false) {
-            request.getRequestDispatcher("/register.html").forward(request, response);
+            request.getRequestDispatcher("/register.htm").forward(request, response);
         } else {
-            request.getRequestDispatcher("/login.html").forward(request, response);
+            request.getRequestDispatcher("/login.htm").forward(request, response);
         }
     }
 

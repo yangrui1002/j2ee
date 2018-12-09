@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet{
         else{
             boolean flag = service.login(userName, password);
             if (flag == false) {
-                request.getRequestDispatcher("/login.html").forward(request, response);
+                request.getRequestDispatcher("/login.htm").forward(request, response);
             } else {
                 request.getSession().setAttribute("userName", userName);
                 request.getRequestDispatcher("/index.html").forward(request, response);

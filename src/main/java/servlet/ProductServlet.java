@@ -46,7 +46,7 @@ public class ProductServlet extends BaseServlet {
         User u = new UserDao ().findUser (name);
         Product p = new ProductDao ().findProduct (pid);
         if(null==u){
-            response.sendRedirect("/login.html");
+            response.sendRedirect("/login.htm");
         }
         else{
             OrderDao orderDao = new OrderDao ();

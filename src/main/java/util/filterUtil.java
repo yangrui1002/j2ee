@@ -4,8 +4,6 @@ package util;
  * Created by YR on 2018/12/4.
  */
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -30,14 +28,14 @@ public class filterUtil implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         String uri = request.getRequestURI();
-        if (uri.endsWith("login.html") || uri.endsWith("login")) {
+        if (uri.endsWith("login.htm") || uri.endsWith("login")) {
             chain.doFilter(request, response);
             return;
         }
 
         String userName = (String) request.getSession().getAttribute("userName");
         if (null == userName) {
-            response.sendRedirect("login.html");
+            response.sendRedirect("login.htm");
             return;
         }
 
