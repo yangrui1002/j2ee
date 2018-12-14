@@ -70,7 +70,7 @@ public class addServlet extends HttpServlet {
             product.setUid (uid);
             product.setId (filename);
             String src = "/products/1/" + filename ;
-            PrintWriter pw= response.getWriter();
+            PrintWriter pw = response.getWriter();
             boolean flag = service.sell (product.getCid (),uid,product.getPname(),src,product.getShop_price (),product.getNum (),product.getPdesc ());
             if (flag == false) {
                 pw.println("<span>上传数据失败！</span>");

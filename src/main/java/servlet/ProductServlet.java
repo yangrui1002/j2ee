@@ -4,22 +4,17 @@ import DAO.OrderDao;
 import DAO.UserDao;
 import controller.ProductService;
 import net.sf.json.JSONArray;
-import org.apache.commons.beanutils.BeanUtils;
 import pojo.Product;
 import DAO.ProductDao;
 import pojo.User;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.LinkedHashMap;
+import java.rmi.ServerException;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+
 
 /**
  * Created by YR on 2018/12/3.
@@ -28,13 +23,14 @@ public class ProductServlet extends BaseServlet {
 
     private ProductService service = new ProductService ();
 
-    protected void find(HttpServletRequest request, HttpServletResponse response) throws  IOException {
+    public void find(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
         String pid = request.getParameter("pid");
         Product product = service.findProduct (pid);
         JSONArray data = JSONArray.fromObject(product);
         response.setCharacterEncoding ("utf-8");
         PrintWriter re = response.getWriter();
         re.append (data.toString());
+        System.out.println (data.toString ());
     }
 
     public void buyservice(HttpServletRequest request, HttpServletResponse response) throws IOException {

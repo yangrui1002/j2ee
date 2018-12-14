@@ -5,13 +5,22 @@ package pojo;
  */
 public class User {
     private String name;
-    private String phone;
+    private String emil;
     private String password;
     private int is_admin;
     private String id;
+    private double money;
 
     public String getId() {
         return id;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 
     public void setId(String id) {
@@ -20,16 +29,16 @@ public class User {
 
     public User(){}
 
-    public User(String name, String phone, String password, int is_admin) {
+    public User(String name, String emil, String password, int is_admin) {
         this.name = name;
-        this.phone = phone;
+        this.emil = emil;
         this.password = password;
         this.is_admin = is_admin;
     }
 
-    public User(String name, String phone, String password) {
+    public User(String name, String emil, String password) {
         this.name = name;
-        this.phone = phone;
+        this.emil = emil;
         this.password = password;
     }
 
@@ -49,12 +58,12 @@ public class User {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getEmil() {
+        return emil;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmil(String emil) {
+        this.emil = emil;
     }
 
     public String getPassword() {
@@ -69,7 +78,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
+                ", emil='" + emil + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

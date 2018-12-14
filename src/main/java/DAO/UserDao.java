@@ -5,12 +5,14 @@ package DAO;
  */
 import util.jdbcUtil;
 import pojo.User;
+import util.mailutil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 import java.util.List;
 
@@ -19,18 +21,18 @@ public class UserDao {
     PreparedStatement stmt = null;
     ResultSet rs = null;
     //注册
-    public boolean register(String name, String password, String phone) {
+    public boolean register(String name, String password, String emil) {
         User user = findUser(name);
         if (user == null) {
             try {
                 conn = jdbcUtil.getConnection ();
                 String str = UUID.randomUUID().toString().replaceAll("-","");
-                String sql = "INSERT INTO user(UID,USERNAME,PASSWORD,PHONE) VALUES (?,?,?,?)";
+                String sql = "INSERT INTO user(UID,USERNAME,PASSWORD,EMIL) VALUES (?,?,?,?)";
                 stmt = jdbcUtil.getStmt (sql);
                 stmt.setString (1, str);
                 stmt.setString (2, name);
                 stmt.setString (3, password);
-                stmt.setString (4, phone);
+                stmt.setString (4, emil);
                 stmt.executeUpdate ();
                 return true;
             } catch (SQLException e) {
@@ -101,6 +103,52 @@ public class UserDao {
         return null;
     }
 
+    public User findnyemil(String emil) {
+        try {
+            conn = jdbcUtil.getConnection ();
+            String sql = "SELECT * FROM user WHERE emil = ?";
+            stmt = jdbcUtil.getStmt (sql);
+            stmt.setString (1, emil);
+            rs = stmt.executeQuery ();
+            User user = null;
+            while (rs.next ()) {
+                user = new User ();
+                user.setName (rs.getString ("username"));
+                user.setPassword (rs.getString ("password"));
+                user.setEmil (rs.getString ("emil"));
+            }
+            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        } finally {
+            jdbcUtil.close (conn, stmt, rs);
+        }
+        return null;
+    }
+
+    public double balance(String name){
+        User user = findUser (name);
+        return user.getMoney ();
+    }
+
+    public void recharge(String name, double money){
+        money += balance (name);
+        try {
+            conn = jdbcUtil.getConnection ();
+            String sql = "UPDATE user set money = ? WHERE USERNAME = ?";
+            stmt = jdbcUtil.getStmt (sql);
+            stmt.setDouble (1,money);
+            stmt.setString (2, name);
+            stmt.executeUpdate ();
+
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        } finally {
+            jdbcUtil.close (conn, stmt, rs);
+        }
+    }
+
     public int getTotal() {
         int total = 0;
         try {
@@ -123,7 +171,6 @@ public class UserDao {
 
     public List<User> list(int start, int count) {
         List<User> users = new ArrayList<> ();
-
         try {
             conn = jdbcUtil.getConnection ();
             String sql = "select * from user LIMIT ?, ?";
@@ -135,10 +182,10 @@ public class UserDao {
             while (rs.next()) {
                 User user = new User();
                 String name = rs.getString("username");
-                String phone = rs.getString ("phone");
+                String emil = rs.getString ("emil");
                 int is_admin=rs.getInt ("is_admin");
                 user.setName (name);
-                user.setPhone (phone);
+                user.setEmil (emil);
                 user.setIs_admin (is_admin);
                 users.add(user);
             }
@@ -155,12 +202,30 @@ public class UserDao {
             String sql = "delete from user where username = ?";
             stmt = jdbcUtil.getStmt (sql);
             stmt.setString (1, id);
-            rs = stmt.executeQuery ();
+            stmt.executeUpdate ();
         }  catch (SQLException e) {
             e.printStackTrace ();
         } finally {
             jdbcUtil.close (conn, stmt, rs);
         }
+    }
+
+    public boolean update(String emil, String password){
+
+        try {
+            conn = jdbcUtil.getConnection ();
+            String sql = "UPDATE user set password = ? WHERE emil = ?";
+            stmt = jdbcUtil.getStmt (sql);
+            stmt.setString (1,password);
+            stmt.setString (2, emil);
+            stmt.executeUpdate ();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        } finally {
+            jdbcUtil.close (conn, stmt, rs);
+        }
+        return false;
     }
 }
 

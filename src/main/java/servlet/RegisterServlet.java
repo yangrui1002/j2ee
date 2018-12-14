@@ -18,9 +18,9 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
-        String phone = request.getParameter ("phone");
+        String emil = request.getParameter ("emil");
 
-        boolean flag = service.register(userName, password, phone);
+        boolean flag = service.register(userName, password, emil);
         if (flag == false) {
             request.getRequestDispatcher("/register.htm").forward(request, response);
         } else {

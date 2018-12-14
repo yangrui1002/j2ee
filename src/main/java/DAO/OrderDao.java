@@ -56,7 +56,7 @@ public class OrderDao {
             while (rs.next()) {
                 Order order = new Order();
                 order.setOid (rs.getString ("oid"));
-                order.setDate (rs.getDate ("ordertime"));
+                order.setDate (rs.getTimestamp ("ordertime"));
                 order.setState (rs.getInt ("state"));
                 order.setUid (rs.getString ("uid"));
                 order.setPid (rs.getString ("pid"));

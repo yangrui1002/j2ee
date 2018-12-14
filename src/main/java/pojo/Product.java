@@ -64,8 +64,8 @@ public class Product {
         return shop_price;
     }
 
-    public void setShop_price(double price) {
-        this.shop_price = price;
+    public void setShop_price(double shop_price) {
+        this.shop_price = shop_price;
     }
 
     public String getPimage() {

@@ -165,7 +165,6 @@ public class ProductDao {
                 product.setShop_price (rs.getDouble ("shop_price"));
                 product.setPdesc (rs.getString ("pdesc"));
                 product.setNum (rs.getInt ("num"));
-                System.out.println (rs.getString ("pimage"));
                 products.add(product);
             }
         }  catch (SQLException e) {

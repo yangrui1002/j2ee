@@ -48,9 +48,8 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("last", last);
 
         List<User> users = new UserDao().list(start, count);
-        JSONArray data = JSONArray.fromObject(users);
-        response.setCharacterEncoding ("utf-8");
-        PrintWriter re = response.getWriter();
-        re.append (data.toString());
+        request.setAttribute ("users",users);
+        request.getRequestDispatcher("/user.jsp").forward(request, response);
+
     }
 }
